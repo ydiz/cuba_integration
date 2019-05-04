@@ -1,0 +1,36 @@
+# Ignore all
+*
+
+# Unignore all with extensions; ignore executables
+!*.*
+
+# ignore all dirs
+*/
+*/*
+!test
+!test/*.cc
+
+
+ckpoint*
+*.txt
+*.o
+
+Test*.cc
+!Test_hmc.cc
+
+.nfs*
+
+.tags
+run.sh
+submit.sh
+nohup.out
+Makefile
+makefile
+
+*.cobaltlog
+*.error
+*.output
+!qlat_wrapper
+!qlat_wrapper/*
+
+cuth_calculate_avg.cc
