@@ -1,8 +1,15 @@
-# tmp=$(sed -n -r  "s/v: \[(.*)\]/\1/p" <<< "$(tail -n 4 output-6916.txt)")
-# read -r r z t <<< "$tmp"
-#
-# echo r: [0, "$r"]
-# echo z: [$((-z)), "$z"]
-# echo t: [0, "$t"]
-#
-sed -n -r "s/.*integral = ([0-9.-]+).*/\1/p" output-6916.txt
+# sed -n -r "s/.*integral = ([0-9.-]+).*/\1/p" output-6916.txt
+
+if [ -f "data.txt" ]; then do
+  echo data.txt already exists
+  exit 
+done
+
+for x in {0..3}; do
+  file=x$x.txt
+  echo "reading from $file"
+  sed -n -r "s/.*integral = ([0-9.-]+).*/\1/p" $file >> data.txt
+done
+
+echo "number of lines in data.txt $(cat data.txt | wc -l)"
+

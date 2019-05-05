@@ -160,33 +160,34 @@ void run_p1(const Int_para &para) {
 	Func func(para);
 
 	int x = para.x_for_p1;
-	if(x==0) return ; // when x=0, integral is 0 and cuba cannote calculate it
-	// int x_min = -8, x_max = 8; // 
 	int y_max = SPACE_LIMIT;
 	int z_max = SPACE_LIMIT;
 	int t_max = SPACE_LIMIT; 
 	std::cout << "x: " << x << std::endl; 
-	std::cout << "y: [" << -y_max << ", " << y_max << "]"<< std::endl; 
-	std::cout << "z: [" << -z_max << ", " << z_max << "]"<< std::endl; 
+	std::cout << "y: [" << 0 << ", " << y_max << "]"<< std::endl; 
+	std::cout << "z: [" << 0  << ", " << z_max << "]"<< std::endl; 
 	std::cout << "t: [" << 0 << ", " << t_max << "]"<< std::endl; 
 	std::cout << std::string(20, '*') << std::endl;
 
+  // p1 integral is symmetric with relative to y and z;  and anti-symmetric in x
 	// for(int x=x_min; x<=x_max; ++x) 
-	for(int y=-y_max; y<=y_max; ++y) 
-		for(int z=-z_max; z<=z_max; ++z)
+	for(int y=0; y<=y_max; ++y) 
+		for(int z=0; z<=z_max; ++z)
 			for(int t=0; t<=t_max; ++t) { // t [0, L/4] // t appears only as absolute value
 				func.v = {double(x), double(y), double(z), double(t)};
 				std::cout << "v: " << "[" << func.v[0] << " " << func.v[1] << " " << func.v[2] << " " << func.v[3] << "]" << std::endl;
-				if(z==0) {
-					std::cout << cur_time << "s	integral = " << 0 << std::endl;
-					continue; // when z=0, integral is 0 and cuba cannote calculate it
-				}
+
+        if(x==0) { // when x=0, integral is 0 and cuba cannote calculate it
+          std::cout << cur_time << "s	integral = " << 0. << std::endl;
+          continue;
+        }	
+
 				if(t==0 || t==1){ // Cuba cannot calculate when t=0; t=1 is very slow to calculate
 					std::cout << cur_time << "s	Cannot calculate t=0,1; I am actually calculating with t=4" << std::endl;
 					func.v[3] = 4;
 				}	
-        if(t==2){ // Cuba cannot calculate when t=0; t=1 is very slow to calculate
-					std::cout << cur_time << "calculating t=2 is slow; I am actually calculating with t=4" << std::endl;
+        if(t==2 || t==3){ // Cuba cannot calculate when t=0; t=1 is very slow to calculate
+					std::cout << cur_time << "calculating t=2,3 is slow; I am actually calculating with t=4" << std::endl;
 					func.v[3] = 4;
 				}
 				integrate(para, func);
@@ -221,7 +222,7 @@ void run_p3(const Int_para &para) {
 
         // for sin, when z=0, integral is 0
         if(z==0) {
-          std::cout << cur_time << "s	integral = " << 0 << std::endl;
+          std::cout << cur_time << "s	integral = " << 0. << std::endl;
           continue;
         }	
 
